@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form th:action="@{/login}" method="post" style="text-align: center;">
+    <div class="input-block">
+        <input type="text" placeholder="Enter username" name="username" id="username">
+    </div>
+    <div class="input-block">
+        <input type="password" placeholder="Enter Password" name="password" id="password">
+    </div>
+    <input type="submit" value="Login"/>
+    <a href="/registration">Registration</a>
+</form>
+</body>
+</html>
