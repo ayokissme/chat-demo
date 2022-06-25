@@ -1,0 +1,29 @@
+{
+    "name": "chat",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/ayokissme/chat-demo.git",
+    "author": "ayokissit <nikolaev.nikita0209@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "start": "webpack-dev-server"
+    },
+    "dependencies": {
+        "@stomp/stompjs": "^6.1.2",
+        "sockjs-client": "^1.6.1",
+        "vue": "^3.2.37"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.18.5",
+        "@babel/preset-env": "^7.18.2",
+        "@vue/cli": "^5.0.6",
+        "@vue/compiler-sfc": "^3.2.37",
+        "babel-loader": "^8.2.5",
+        "css-loader": "^6.7.1",
+        "vue-loader": "^17.0.0",
+        "vue-style-loader": "^4.1.3",
+        "webpack": "^5.73.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-dev-server": "^4.9.2"
+    }
+}
