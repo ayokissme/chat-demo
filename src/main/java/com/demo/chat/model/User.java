@@ -1,5 +1,6 @@
 package com.demo.chat.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,9 +25,13 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
+    @JsonView(Views.Username.class)
     private UUID id;
 
+    @JsonView(Views.Username.class)
     private String username;
+
+    @JsonView(Views.Password.class)
     private String password;
 
     @Override

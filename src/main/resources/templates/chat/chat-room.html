@@ -3,8 +3,10 @@
 <head>
     <title>Chat</title>
     <script th:inline="javascript">
-        var frontendData = [[${frontendData}]]
+        const frontendData = [[${frontendData}]]
+        frontendData.user = JSON.parse(frontendData.user)
     </script>
+    <link rel="stylesheet" href="css/chat-room.css">
 </head>
 <body>
 

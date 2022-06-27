@@ -1,0 +1,74 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgba(145, 79, 245, 0.26);
+}
+
+.container {
+    display: block;
+    max-width: 800px;
+    height: 95vh;
+    margin: auto;
+}
+
+.chat {
+    position: relative;
+
+    height: 100%;
+    background-color: #f6f6f6;
+    border: 1px solid #ccc;
+
+    font: 16px/26px Georgia, Garamond, Serif;
+    font-size: 18px;
+}
+
+.user {
+    padding: 15px;
+    border-bottom: 1px black solid;
+    text-align: center;
+    font-size: 32px;
+}
+
+.user a {
+    color: #7328f8;
+    text-decoration: none;
+}
+
+.user a:hover {
+    color: #4f1ab0;
+}
+
+.messages {
+    padding: 20px;
+    height: 63%;
+    overflow: auto;
+}
+
+.answer {
+    margin: 10px 0;
+    width: 500px;
+}
+
+.answer::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.answer-left {
+    padding: 10px;
+    float: left;
+    background-color: #ffe349;
+    border-radius: 15px;
+}
+
+.answer-right {
+    padding: 10px;
+    float: right;
+    background-color: #914ff5;
+    color: white;
+    border-radius: 15px;
+}

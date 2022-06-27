@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const path = require('path')
+const path = require('path');
 const {VueLoaderPlugin} = require('vue-loader')
 
 module.exports = {
@@ -9,9 +9,7 @@ module.exports = {
         chat: path.join(__dirname, 'src', 'main', 'resources', 'static', 'js', 'chat.js')
     },
     devServer: {
-        static: {
-            directory: path.join(__dirname, 'public'),
-        },
+        static: './dist',
         compress: true,
         port: 8000,
         allowedHosts: [
@@ -20,16 +18,6 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            },
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
@@ -46,8 +34,8 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new webpack.DefinePlugin({
-            __VUE_OPTIONS_API__: false,
-            __VUE_PROD_DEVTOOLS__: false,
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: true,
         }),
     ],
     resolve: {
@@ -56,7 +44,7 @@ module.exports = {
             path.join(__dirname, 'node_modules'),
         ],
         alias: {
-            vue$: 'vue/dist/vue.esm-bundler.js',
-        },
-    },
+            vue: "vue/dist/vue.esm-bundler.js",
+        }
+    }
 }
