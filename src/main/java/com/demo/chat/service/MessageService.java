@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface MessageService {
     List<Message> getAllMessages();
-    ResponseEntity<?> saveMessage(MessageRequest message, User sender) throws Exception;
+    ResponseEntity<Message> saveMessage(MessageRequest message, User sender) throws Exception;
 }

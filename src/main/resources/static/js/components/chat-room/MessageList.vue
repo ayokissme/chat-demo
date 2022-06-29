@@ -3,7 +3,7 @@
         <message v-for="message in messages"
                  :key="message.id"
                  :message="message"/>
-        <chat-form/>
+        <chat-form :messages="messages"/>
     </div>
 </template>
 
@@ -26,5 +26,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.messages {
+    padding: 20px;
+    height: 63%;
+    overflow: auto;
+}
 </style>

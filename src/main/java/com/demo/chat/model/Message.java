@@ -3,6 +3,7 @@ package com.demo.chat.model;
 import com.demo.chat.model.enums.MessageStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Table(name = "messages")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Message {
 
     @Id
@@ -40,4 +42,9 @@ public class Message {
 
     @Enumerated(EnumType.STRING)
     private MessageStatus status;
+
+    public Message(String content, User user) {
+        this.content = content;
+        this.sender = user;
+    }
 }

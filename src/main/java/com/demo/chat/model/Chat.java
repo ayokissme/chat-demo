@@ -11,6 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Chat {
+
     @Id
     @GeneratedValue
     private UUID id;

@@ -11,7 +11,8 @@
   "dependencies": {
     "@stomp/stompjs": "^6.1.2",
     "sockjs-client": "^1.6.1",
-    "vue": "^3.2.36"
+    "vue": "^3.2.36",
+    "vue-router": "^4.0.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.6",

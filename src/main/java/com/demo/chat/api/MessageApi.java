@@ -30,7 +30,7 @@ public class MessageApi {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveMessage(
+    public ResponseEntity<Message> saveMessage(
             @RequestBody MessageRequest messageRequest,
             @AuthenticationPrincipal User sender
     ) throws Exception {

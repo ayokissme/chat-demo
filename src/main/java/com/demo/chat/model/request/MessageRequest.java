@@ -10,4 +10,5 @@ import java.util.UUID;
 public class MessageRequest {
     String content;
     UUID recipient;
+    UUID sender;
 }

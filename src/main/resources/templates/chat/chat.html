@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat</title>
+    <script th:inline="javascript">
+        const frontendData = [[${frontendData}]]
+        frontendData.user = JSON.parse(frontendData.user)
+    </script>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script src="http://localhost:8000/chat.js"></script>
+
+</body>
+</html>

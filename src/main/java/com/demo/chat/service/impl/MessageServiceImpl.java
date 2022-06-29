@@ -2,7 +2,6 @@ package com.demo.chat.service.impl;
 
 import com.demo.chat.model.Message;
 import com.demo.chat.model.User;
-import com.demo.chat.model.enums.MessageStatus;
 import com.demo.chat.model.request.MessageRequest;
 import com.demo.chat.repo.MessageRepo;
 import com.demo.chat.service.MessageService;
@@ -31,12 +30,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public ResponseEntity<?> saveMessage(MessageRequest messageRequest, User sender) throws Exception {
+    public ResponseEntity<Message> saveMessage(MessageRequest messageRequest, User sender) throws Exception {
         Message message = new Message();
         message.setSender(sender);
+        message.setContent(messageRequest.getContent());
         message.setTimestamp(LocalDateTime.now());
         message.setStatus(DELIVERED);
-        messageRepo.save(message);
-        return ResponseEntity.ok().build();
+//        messageRepo.save(message);
+        return ResponseEntity.ok().body(message);
     }
 }

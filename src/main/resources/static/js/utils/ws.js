@@ -1,18 +1,23 @@
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 
-var stompClient = null
+let stompClient = null
+let handlers = []
 
 export function connect() {
     stompClient = Stomp.over(function () {
-        return new SockJS('/gs-guide-websocket')
+        return new SockJS('/ws')
     });
     stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        stompClient.subscribe('/topic/activity', message => {
+        stompClient.subscribe('/topic/greetings', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
         })
     })
+}
+
+export function addHandler(handler) {
+    handlers.push(handler)
 }
 
 export function disconnect() {
@@ -23,5 +28,5 @@ export function disconnect() {
 }
 
 export function sendMessage(message) {
-    stompClient.send("/app/change-message", {}, JSON.stringify(message))
+    stompClient.send("/app/send", {}, JSON.stringify(message))
 }

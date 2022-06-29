@@ -6,7 +6,11 @@
 </template>
 
 <script>
+
+import {sendMessage} from "utils/ws";
+
 export default {
+    props: ['messages'],
     data() {
         return {
             content: '',
@@ -14,23 +18,9 @@ export default {
         }
     },
     methods: {
-        sendMessage(event) {
-            console.log(this.content)
-            console.log(this.user)
-            // console.log(event.target.elements.content.value)
-            fetch("/api/message/save", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                dataType: 'json',
-                body: JSON.stringify({
-                    content:  this.content,
-                    sender: this.user
-                })
-            }).then(() => {
-                this.content = ''
-            })
+        sendMessage() {
+            sendMessage({content: this.content, sender: this.user.id})
+            this.content = ''
         }
     }
 }

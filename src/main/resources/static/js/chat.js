@@ -1,4 +1,10 @@
 import {createApp} from 'vue'
-import ChatApp from "pages/ChatApp.vue";
+import {connect} from './utils/ws'
+import router from "./router/router.js";
+import App from "pages/App.vue";
 
-let app = createApp(ChatApp).mount('#app')
+
+connect()
+let app = createApp(App)
+app.use(router)
+app.mount('#app')
