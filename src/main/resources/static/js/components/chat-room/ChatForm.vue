@@ -1,6 +1,9 @@
 <template>
     <form class="chat-input" @submit.prevent="sendMessage" name="message">
-        <textarea name="content" placeholder="Type something" v-model="content"></textarea>
+        <textarea name="content" placeholder="Type something"
+                  v-model="content"
+                  @keydown.enter.exact.prevent="sendMessage"
+                  @keydown.enter.shift.exact.prevent="content += '\n'"/>
         <input :disabled="content.length === 0" type="submit" class="send" value="Send">
     </form>
 </template>

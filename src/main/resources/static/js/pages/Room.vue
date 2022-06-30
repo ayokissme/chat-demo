@@ -1,6 +1,6 @@
 <template>
     <main class="container">
-        <div class="chat">
+        <div class="content">
 
             <div class="user">
                 <a href="#">Username</a>
@@ -26,16 +26,22 @@ export default {
         }
     },
     created() {
-        fetch("/api/message/all")
-            .then(result => result.json())
-            .then(data => {
-                this.messages = data
-            })
-
         addHandler(data => {
-            console.log(data)
             this.messages.push(data)
         })
+    },
+    beforeRouteEnter(to, from, next) {
+        const path = '/api/message/' + to.params['id']
+        fetch(path)
+            .then(result => result.json())
+            .then(data => {
+                next(vm => {
+                    vm.messages = data;
+                })
+            })
+            .catch(() => {
+                next('/chat')
+            })
     }
 }
 </script>
@@ -56,33 +62,6 @@ export default {
 
 .user a:hover {
     color: #4f1ab0;
-}
-
-.chat {
-    position: relative;
-
-    height: 100%;
-    background-color: #f6f6f6;
-    border: 1px solid #ccc;
-
-    font: 16px/26px Georgia, Garamond, Serif;
-    font-size: 18px;
-}
-
-html {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-color: rgba(145, 79, 245, 0.26);
-}
-
-.container {
-    display: block;
-    max-width: 800px;
-    height: 95vh;
-    margin: auto;
 }
 
 </style>

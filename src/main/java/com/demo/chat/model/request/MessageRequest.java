@@ -9,6 +9,5 @@ import java.util.UUID;
 @Setter
 public class MessageRequest {
     String content;
-    UUID recipient;
     UUID sender;
 }

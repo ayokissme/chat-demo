@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/message")
@@ -24,9 +25,12 @@ public class MessageApi {
         this.messageService = messageService;
     }
 
-    @GetMapping(value = "/all")
-    public List<Message> getAllChatMessages() {
-        return messageService.getAllMessages();
+    @GetMapping("{id}")
+    public ResponseEntity<List<Message>> getAllChatMessages(
+            @PathVariable("id") Long convId,
+            @AuthenticationPrincipal User sender
+    ) {
+        return messageService.getMessages(convId, sender);
     }
 
     @PostMapping("/save")

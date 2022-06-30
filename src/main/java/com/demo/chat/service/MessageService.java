@@ -8,6 +8,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface MessageService {
-    List<Message> getAllMessages();
+    ResponseEntity<List<Message>> getMessages(Long recipientId, User sender);
     ResponseEntity<Message> saveMessage(MessageRequest message, User sender) throws Exception;
 }

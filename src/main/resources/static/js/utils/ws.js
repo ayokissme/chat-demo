@@ -28,5 +28,6 @@ export function disconnect() {
 }
 
 export function sendMessage(message) {
+    console.log(message)
     stompClient.send("/app/send", {}, JSON.stringify(message))
 }

@@ -1,0 +1,28 @@
+
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgba(145, 79, 245, 0.26);
+}
+
+.container {
+    display: block;
+    max-width: 800px;
+    height: 95vh;
+    margin: auto;
+}
+
+.content {
+    position: relative;
+
+    height: 100%;
+    background-color: #f6f6f6;
+    border: 1px solid #ccc;
+
+    font: 16px/26px Georgia, Garamond, Serif;
+    font-size: 18px;
+}
