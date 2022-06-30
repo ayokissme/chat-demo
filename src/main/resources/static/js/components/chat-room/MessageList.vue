@@ -3,7 +3,7 @@
         <message v-for="message in messages"
                  :key="message.id"
                  :message="message"/>
-        <chat-form :messages="messages"/>
+        <chat-form :messages="messages" :conversation="conversation"/>
     </div>
 </template>
 
@@ -13,7 +13,7 @@ import Message from 'components/chat-room/Message.vue'
 import ChatForm from 'components/chat-room/ChatForm.vue'
 
 export default {
-    props: ['messages'],
+    props: ['messages', 'conversation'],
     components: {
         Message,
         ChatForm

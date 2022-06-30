@@ -5,7 +5,7 @@
             <div class="user">
                 <a href="#">Username</a>
             </div>
-            <messages-list :messages="messages"/>
+            <messages-list :messages="messages" :conversation="conversation"/>
 
         </div>
     </main>
@@ -23,11 +23,13 @@ export default {
     data() {
         return {
             messages: [],
+            conversation: null
         }
     },
     created() {
         addHandler(data => {
-            this.messages.push(data)
+            console.log(data)
+            // this.messages.push(data)
         })
     },
     beforeRouteEnter(to, from, next) {
@@ -36,7 +38,8 @@ export default {
             .then(result => result.json())
             .then(data => {
                 next(vm => {
-                    vm.messages = data;
+                    vm.messages = data.messages
+                    vm.conversation = data.conversation
                 })
             })
             .catch(() => {

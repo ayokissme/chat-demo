@@ -13,7 +13,7 @@
 import {sendMessage} from "utils/ws";
 
 export default {
-    props: ['messages'],
+    props: ['messages', 'conversation'],
     data() {
         return {
             content: '',
@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         sendMessage() {
-            sendMessage({content: this.content, sender: this.user.id})
+            sendMessage({content: this.content, conversation: this.conversation})
             this.content = ''
         }
     }

@@ -8,6 +8,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped>@import '../../css/chat.css';</style>

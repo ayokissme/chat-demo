@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,25 +25,34 @@ public class MessageServiceImpl implements MessageService {
 
     private final MessageRepo messageRepo;
     private final ConversationRepo conversationRepo;
-    private final UserRepo userRepo;
 
     @Autowired
-    public MessageServiceImpl(MessageRepo messageRepo, ConversationRepo conversationRepo, UserRepo userRepo) {
+    public MessageServiceImpl(MessageRepo messageRepo, ConversationRepo conversationRepo) {
         this.messageRepo = messageRepo;
         this.conversationRepo = conversationRepo;
-        this.userRepo = userRepo;
     }
 
     @Override
-    public ResponseEntity<List<Message>> getMessages(Long convId, User sender) {
+    public ResponseEntity<HashMap<String, Object>> getMessages(Long convId, User sender) {
         Optional<Conversation> convOptional = conversationRepo.findById(convId);
         if (convOptional.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
         Conversation conversation = convOptional.get();
+        boolean isNotInConversation = conversation.getParticipants()
+                .stream()
+                .map(User::getId)
+                .noneMatch(uuid -> uuid.equals(sender.getId()));
+        if (isNotInConversation) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        HashMap<String, Object> response = new HashMap<>();
         List<Message> messages = messageRepo.findAllByConversation(conversation);
-        return ResponseEntity.ok().body(messages);
+        response.put("conversation", conversation);
+        response.put("messages", messages);
+        return ResponseEntity.ok().body(response);
     }
 
     @Override

@@ -6,10 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,14 +22,18 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
-    @JsonView(Views.Username.class)
+    @JsonView(Views.NoPassword.class)
     private UUID id;
 
-    @JsonView(Views.Username.class)
+    @JsonView(Views.NoPassword.class)
     private String username;
 
-    @JsonView(Views.Password.class)
+    @JsonView(Views.WithPassword.class)
     private String password;
+
+    @Column(name = "photo")
+    @JsonView(Views.NoPassword.class)
+    private String photo;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

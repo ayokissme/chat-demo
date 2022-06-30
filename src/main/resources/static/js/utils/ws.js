@@ -10,9 +10,13 @@ export function connect() {
     });
     stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        stompClient.subscribe('/topic/greetings', message => {
+        console.log(frame)
+        stompClient.subscribe('/user/queue/reply', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
         })
+        // stompClient.subscribe('/queue', message => {
+        //     handlers.forEach(handler => handler(JSON.parse(message.body)))
+        // })
     })
 }
 
@@ -28,6 +32,5 @@ export function disconnect() {
 }
 
 export function sendMessage(message) {
-    console.log(message)
-    stompClient.send("/app/send", {}, JSON.stringify(message))
+    stompClient.send("/app/queue/reply", {}, JSON.stringify(message))
 }

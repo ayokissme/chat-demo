@@ -1,13 +1,12 @@
 package com.demo.chat.model.request;
 
+import com.demo.chat.model.Conversation;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @Getter
 @Setter
 public class MessageRequest {
     String content;
-    UUID sender;
+    Conversation conversation;
 }

@@ -8,6 +8,7 @@
 
 <script>
 
+import {addHandler} from 'utils/ws'
 import ChatList from 'components/chat-list/ChatList.vue'
 
 export default {
@@ -26,10 +27,10 @@ export default {
                 this.chats = data
             })
 
-        // addHandler(data => {
-        //     console.log(data)
-        //     this.messages.push(data)
-        // })
+        addHandler(data => {
+            console.log(data)
+            // this.messages.push(data)
+        })
     }
 }
 
