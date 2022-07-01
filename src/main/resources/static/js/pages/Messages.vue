@@ -5,7 +5,8 @@
             <div class="user">
                 <a href="#">Username</a>
             </div>
-            <messages-list :messages="messages" :conversation="conversation"/>
+            <messages-list :messages="messages"
+                           :conversation="conversation"/>
 
         </div>
     </main>
@@ -28,8 +29,7 @@ export default {
     },
     created() {
         addHandler(data => {
-            console.log(data)
-            // this.messages.push(data)
+            this.messages.push(data)
         })
     },
     beforeRouteEnter(to, from, next) {
@@ -45,7 +45,7 @@ export default {
             .catch(() => {
                 next('/chat')
             })
-    }
+    },
 }
 </script>
 

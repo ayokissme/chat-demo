@@ -1,6 +1,8 @@
 <template>
-    <div class="answer" :class="message.sender.id === user.id ? 'answer-right' : 'answer-left'">
-        {{ message.content }}
+    <div class="answer">
+        <span :class="message.sender.id === user.id ? 'answer-right' : 'answer-left'">
+                    {{ message.content }}
+        </span>
     </div>
 </template>
 
@@ -12,8 +14,8 @@ export default {
             user: frontendData.user,
         }
     },
-    created() {
-        // console.log(JSON.parse(this.user))
+    mounted() {
+        this.$parent.$el.scrollTop = this.$parent.$el.scrollHeight
     }
 }
 </script>
@@ -22,7 +24,7 @@ export default {
 
 .answer {
     margin: 10px 0;
-    width: 500px;
+    word-wrap: break-word;
 }
 
 .answer::after {
@@ -32,6 +34,10 @@ export default {
 }
 
 .answer-left {
+    min-width: 150px;
+    max-width: 500px;
+    width: auto;
+
     padding: 10px;
     float: left;
     background-color: #ffe349;
@@ -39,6 +45,10 @@ export default {
 }
 
 .answer-right {
+    min-width: 150px;
+    max-width: 500px;
+    width: auto;
+
     padding: 10px;
     float: right;
     background-color: #914ff5;

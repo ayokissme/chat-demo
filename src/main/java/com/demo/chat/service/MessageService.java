@@ -5,10 +5,11 @@ import com.demo.chat.model.User;
 import com.demo.chat.model.request.MessageRequest;
 import org.springframework.http.ResponseEntity;
 
+import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 
 public interface MessageService {
     ResponseEntity<HashMap<String, Object>> getMessages(Long recipientId, User sender);
-    ResponseEntity<Message> saveMessage(MessageRequest message, User sender) throws Exception;
+    Message saveMessage(Message message, String username) throws Exception;
+    void sendMessageToUsers(MessageRequest messageRequest, Principal user) throws Exception;
 }

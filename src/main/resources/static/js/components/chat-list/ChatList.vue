@@ -1,4 +1,4 @@
-<template>
+<template v-cloak>
 
     <chat-search/>
 

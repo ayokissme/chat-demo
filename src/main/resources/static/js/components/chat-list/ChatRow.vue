@@ -63,6 +63,10 @@ export default {
     text-decoration: none;
     font-size: 18px;
     color: white;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-img {

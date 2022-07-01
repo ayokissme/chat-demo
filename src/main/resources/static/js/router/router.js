@@ -1,5 +1,5 @@
 import {createWebHistory, createRouter} from "vue-router";
-import Room from 'pages/Room.vue'
+import Room from 'pages/Messages.vue'
 import Chats from 'pages/Chats.vue'
 import NotFound from 'pages/NotFound.vue'
 

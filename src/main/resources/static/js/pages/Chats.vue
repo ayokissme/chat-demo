@@ -21,17 +21,20 @@ export default {
         }
     },
     created() {
-        fetch("/api/conversation/all")
-            .then(result => result.json())
-            .then(data => {
-                this.chats = data
-            })
-
         addHandler(data => {
             console.log(data)
             // this.messages.push(data)
         })
-    }
+    },
+    beforeRouteEnter(to, from, next) {
+        fetch("/api/conversation/all")
+            .then(result => result.json())
+            .then(data => {
+                next(vm => {
+                    vm.chats = data
+                })
+            })
+    },
 }
 
 </script>

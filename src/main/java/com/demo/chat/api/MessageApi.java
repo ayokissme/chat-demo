@@ -33,12 +33,4 @@ public class MessageApi {
     ) {
         return messageService.getMessages(convId, sender);
     }
-
-    @PostMapping("/save")
-    public ResponseEntity<Message> saveMessage(
-            @RequestBody MessageRequest messageRequest,
-            @AuthenticationPrincipal User sender
-    ) throws Exception {
-        return messageService.saveMessage(messageRequest, sender);
-    }
 }

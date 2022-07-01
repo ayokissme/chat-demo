@@ -1,5 +1,5 @@
 <template>
-    <div class="messages">
+    <div class="messages" id="messages">
         <message v-for="message in messages"
                  :key="message.id"
                  :message="message"/>
@@ -9,7 +9,7 @@
 
 <script>
 
-import Message from 'components/chat-room/Message.vue'
+import Message from 'components/chat-room/MessageRow.vue'
 import ChatForm from 'components/chat-room/ChatForm.vue'
 
 export default {
@@ -22,7 +22,8 @@ export default {
         return {
             message: null
         }
-    }
+    },
+
 }
 </script>
 
