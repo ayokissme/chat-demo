@@ -1,5 +1,5 @@
 # Messenger
 
-Demo version of the chat app.
+Demo version of the chat app
 
 Testing websockets
