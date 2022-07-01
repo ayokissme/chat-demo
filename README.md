@@ -1,4 +1,4 @@
-# chat-demo
+# Messenger
 
 Demo version of the chat app.
 
