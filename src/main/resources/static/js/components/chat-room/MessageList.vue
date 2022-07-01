@@ -2,7 +2,8 @@
     <div class="messages" id="messages">
         <message v-for="message in messages"
                  :key="message.id"
-                 :message="message"/>
+                 :message="message"
+                 :conversation="conversation"/>
         <chat-form :messages="messages" :conversation="conversation"/>
     </div>
 </template>
