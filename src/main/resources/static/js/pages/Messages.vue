@@ -3,7 +3,7 @@
         <div class="content">
 
             <div class="user">
-                <a href="#">Username</a>
+                <a href="#" v-html="chatName"></a>
             </div>
             <messages-list :messages="messages"
                            :conversation="conversation"/>
@@ -24,13 +24,27 @@ export default {
     data() {
         return {
             messages: [],
-            conversation: null
+            conversation: null,
+            chatName: '',
+            user: frontendData.user,
         }
     },
     created() {
         addHandler(data => {
             this.messages.push(data)
         })
+    },
+
+    mounted() {
+        if (this.conversation.conversationType === 'ONE_TO_ONE') {
+            this.conversation.participants.forEach(p => {
+                if (p.id !== this.user.id) {
+                    this.chatName = p.username
+                }
+            })
+        } else {
+            this.chatName = this.conversation.name
+        }
     },
     beforeRouteEnter(to, from, next) {
         const path = '/api/message/' + to.params['id']

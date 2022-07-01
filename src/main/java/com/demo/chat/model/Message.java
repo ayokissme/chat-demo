@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "messages")
@@ -16,9 +17,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Message {
 
-    public Message(String content, User sender) {
+    public Message(String content) {
         this.content = content;
-        this.sender = sender;
     }
 
     @Id
@@ -31,9 +31,8 @@ public class Message {
     @JoinColumn(name = "conversation_id")
     private Conversation conversation;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private User sender;
+    @Column(name = "sender_id")
+    private UUID senderId;
 
     @Column(name = "timestamp", updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:ss")

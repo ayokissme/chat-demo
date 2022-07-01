@@ -1,5 +1,7 @@
 <template>
-    <h1 style="text-align: center; margin-top: 250px">Not found</h1>
+    <div class="container">
+        <h1 class="error">Not found</h1>
+    </div>
 </template>
 
 <script>
@@ -9,5 +11,8 @@ export default {
 </script>
 
 <style scoped>
-
+.error {
+    text-align: center;
+    padding-top: 150px;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
     <main class="container">
-        <div style="background-color: white; min-height: 100%; height: auto; padding: 30px;">
+        <div style="background-color: white; min-height: 95%; height: auto; padding: 30px;">
             <chat-list :chats="chats"/>
         </div>
     </main>

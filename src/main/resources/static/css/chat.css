@@ -6,6 +6,7 @@ html {
 }
 
 body {
+    font-family: 'Roboto', sans-serif;
     background-color: rgba(145, 79, 245, 0.26);
 }
 
@@ -23,6 +24,5 @@ body {
     background-color: #f6f6f6;
     border: 1px solid #ccc;
 
-    font: 16px/26px Georgia, Garamond, Serif;
     font-size: 18px;
 }

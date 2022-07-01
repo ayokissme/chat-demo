@@ -73,7 +73,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message saveMessage(Message message, String username) {
         User sender = userRepo.findByUsername(username).orElseGet(User::new);
-        message.setSender(sender);
+        message.setSenderId(sender.getId());
         message.setCreatedAt(LocalDateTime.now());
         message.setStatus(DELIVERED);
         return messageRepo.save(message);
@@ -84,11 +84,6 @@ public class MessageServiceImpl implements MessageService {
         Message message = new Message();
         BeanUtils.copyProperties(messageRequest, message);
         Set<User> participants = messageRequest.getConversation().getParticipants();
-//        List<String> participants = messageRequest.getConversation().getParticipants()
-//                .stream()
-//                .map(User::getUsername)
-//                .filter(username -> !username.equals(principal.getName()))
-//                .collect(Collectors.toList());
 
         participants.forEach(p ->
                 simpMessagingTemplate.convertAndSendToUser(

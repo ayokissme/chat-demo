@@ -3,12 +3,16 @@
         <div class="nav-bar">
             <ul>
                 <li>
-                    <i class="fa-solid fa-comment"></i>
-                    <a href="/chat">Chats</a>
+                    <a href="/chat">
+                        <i class="fa-solid fa-comment fa-sm"></i>
+                        <span>Chats</span>
+                    </a>
                 </li>
                 <li>
-                    <i class="fa fa-comments-o" aria-hidden="true"></i>
-                    <a href="/settings">Settings</a>
+                    <a href="/settings">
+                        <i class="fa-solid fa-gear fa-sm"></i>
+                        <span>Settings</span>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -29,12 +33,19 @@ export default {
     float: left;
     margin-left: 100px;
     margin-top: 80px;
-    width: 200px;
+    width: auto;
     overflow-y: auto;
     height: auto;
 }
 
+.nav-bar ul {
+    float: left;
+}
+
 .nav-bar li {
+    margin: 20px 0;
+    padding: 10px 50px 10px 10px;
+    text-align: left;
     list-style-type: none;
     border-radius: 10px;
 }
@@ -43,12 +54,14 @@ export default {
     background-color: #f8f8f8;
 }
 
-li a {
-    display: block;
-    padding: 10px;
+.nav-bar a {
     text-decoration: none;
     color: black;
     font-size: 24px;
+}
+
+.nav-bar span {
+    margin-left: 10px;
 }
 
 </style>
