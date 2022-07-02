@@ -2,9 +2,7 @@
     <div class="answer">
         <div :class="message.senderId === user.id ? 'answer-right' : 'answer-left'">
             <div class="answer-image">
-                <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png"
-                    alt="img">
+                <img :src="userImage" alt="img">
             </div>
             <div class="answer-text">
                 <div class="answer-username" v-html="sender"></div>
@@ -16,16 +14,20 @@
 
 <script>
 export default {
-    props: ['message', 'conversation'],
+    props: ['message', 'conversation', 'avatars'],
     data() {
         return {
             user: frontendData.user,
             sender: '',
+            userImage: '',
         }
     },
     created() {
         const sender = this.conversation.participants.find(p => p.id === this.message.senderId)
         this.sender = sender.username
+
+        const avatarOwner = this.avatars.find(p => p.id === this.message.senderId)
+        this.userImage = 'data:image/png;base64,' + avatarOwner.img
     },
     mounted() {
         this.$parent.$el.scrollTop = this.$parent.$el.scrollHeight

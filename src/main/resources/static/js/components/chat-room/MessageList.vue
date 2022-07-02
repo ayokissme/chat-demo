@@ -1,22 +1,23 @@
 <template>
     <div class="messages" id="messages">
-        <message v-for="message in messages"
+        <message-row v-for="message in messages"
                  :key="message.id"
                  :message="message"
-                 :conversation="conversation"/>
+                 :conversation="conversation"
+                 :avatars="avatars"/>
         <chat-form :messages="messages" :conversation="conversation"/>
     </div>
 </template>
 
 <script>
 
-import Message from 'components/chat-room/MessageRow.vue'
+import MessageRow from 'components/chat-room/MessageRow.vue'
 import ChatForm from 'components/chat-room/ChatForm.vue'
 
 export default {
-    props: ['messages', 'conversation'],
+    props: ['messages', 'conversation', 'avatars'],
     components: {
-        Message,
+        MessageRow,
         ChatForm
     },
     data() {

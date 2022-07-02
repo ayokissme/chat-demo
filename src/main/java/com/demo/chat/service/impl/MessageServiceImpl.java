@@ -12,17 +12,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static com.demo.chat.model.enums.MessageStatus.DELIVERED;
 
@@ -33,6 +29,7 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepo messageRepo;
     private final ConversationRepo conversationRepo;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final SettingsServiceImpl settingsService;
     private final UserRepo userRepo;
 
     @Autowired
@@ -40,10 +37,11 @@ public class MessageServiceImpl implements MessageService {
             MessageRepo messageRepo,
             ConversationRepo conversationRepo,
             SimpMessagingTemplate simpMessagingTemplate,
-            UserRepo userRepo) {
+            SettingsServiceImpl settingsService, UserRepo userRepo) {
         this.messageRepo = messageRepo;
         this.conversationRepo = conversationRepo;
         this.simpMessagingTemplate = simpMessagingTemplate;
+        this.settingsService = settingsService;
         this.userRepo = userRepo;
     }
 
@@ -55,17 +53,14 @@ public class MessageServiceImpl implements MessageService {
         }
 
         Conversation conversation = convOptional.get();
-        boolean isNotInConversation = conversation.getParticipants()
-                .stream()
-                .map(User::getId)
-                .noneMatch(uuid -> uuid.equals(sender.getId()));
-        if (isNotInConversation) {
+        if (isNotInConversation(conversation, sender)) {
             return ResponseEntity.badRequest().build();
         }
 
         HashMap<String, Object> response = new HashMap<>();
         List<Message> messages = messageRepo.findAllByConversation(conversation);
         response.put("conversation", conversation);
+        response.put("avatars", getAvatars(conversation));
         response.put("messages", messages);
         return ResponseEntity.ok().body(response);
     }
@@ -92,5 +87,29 @@ public class MessageServiceImpl implements MessageService {
                         saveMessage(message, principal.getName())
                 )
         );
+    }
+
+    private boolean isNotInConversation(Conversation conversation, User sender) {
+        return conversation.getParticipants()
+                .stream()
+                .map(User::getId)
+                .noneMatch(uuid -> uuid.equals(sender.getId()));
+    }
+
+    private List<HashMap<String, Object>> getAvatars(Conversation conversation) {
+        List<HashMap<String, Object>> avatars = new ArrayList<>();
+        conversation.getParticipants()
+                .forEach(p -> {
+                    try {
+                        String encodeImage = settingsService.encodeImage(p);
+                        HashMap<String, Object> avatar = new HashMap<>();
+                        avatar.put("id", p.getId());
+                        avatar.put("img", encodeImage);
+                        avatars.add(avatar);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+        return avatars;
     }
 }

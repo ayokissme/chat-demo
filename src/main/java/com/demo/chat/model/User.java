@@ -31,9 +31,9 @@ public class User implements UserDetails {
     @JsonView(Views.WithPassword.class)
     private String password;
 
-    @Column(name = "photo")
+    @Column(name = "image")
     @JsonView(Views.NoPassword.class)
-    private String photo;
+    private String image = "no-profile-picture.png";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

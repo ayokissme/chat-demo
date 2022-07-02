@@ -6,7 +6,8 @@
                 <a href="#" v-html="chatName"></a>
             </div>
             <messages-list :messages="messages"
-                           :conversation="conversation"/>
+                           :conversation="conversation"
+                           :avatars="avatars"/>
 
         </div>
     </main>
@@ -25,6 +26,7 @@ export default {
         return {
             messages: [],
             conversation: null,
+            avatars: [],
             chatName: '',
             user: frontendData.user,
         }
@@ -54,6 +56,7 @@ export default {
                 next(vm => {
                     vm.messages = data.messages
                     vm.conversation = data.conversation
+                    vm.avatars = data.avatars
                 })
             })
             .catch(() => {
