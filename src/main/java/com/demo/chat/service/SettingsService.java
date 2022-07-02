@@ -6,4 +6,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface SettingsService {
     ResponseEntity<?> uploadImage(User user, MultipartFile imageFile);
+    ResponseEntity<?> getUserImage(User user);
 }
