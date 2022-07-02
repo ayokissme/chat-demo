@@ -4,7 +4,8 @@
 
     <div v-if="chats.length !== 0">
         <chat-row v-for="chat in chats"
-                  :chat="chat"/>
+                  :chat="chat"
+                  :avatars="avatars"/>
     </div>
 
     <div v-else>
@@ -19,7 +20,7 @@ import ChatRow from "components/chat-list/ChatRow.vue";
 import ChatSearch from "components/chat-list/ChatSearch.vue";
 
 export default {
-    props: ['chats'],
+    props: ['chats', 'avatars'],
     components: {
         ChatRow,
         ChatSearch

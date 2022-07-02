@@ -12,6 +12,8 @@ export function connect() {
     stompClient.connect({}, frame => {
         stompClient.subscribe('/user/queue/reply', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
+            // const audio = new Audio('');
+            // audio.play();
         })
     })
 }

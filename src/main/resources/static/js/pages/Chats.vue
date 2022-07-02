@@ -1,7 +1,8 @@
 <template>
     <main class="container">
         <div style="background-color: white; min-height: 95%; height: auto; padding: 30px;">
-            <chat-list :chats="chats"/>
+            <chat-list :chats="chats"
+                       :avatars="avatars"/>
         </div>
     </main>
 </template>
@@ -18,6 +19,7 @@ export default {
     data() {
         return {
             chats: [],
+            avatars: [],
         }
     },
     created() {
@@ -31,7 +33,8 @@ export default {
             .then(result => result.json())
             .then(data => {
                 next(vm => {
-                    vm.chats = data
+                    vm.chats = data.conversations
+                    vm.avatars = data.avatars
                 })
             })
     },

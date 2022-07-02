@@ -3,8 +3,10 @@
         <div class="content">
 
             <div class="user">
+                <img class="chat-image" :src="chatImage" alt="img">
                 <a href="#" v-html="chatName"></a>
             </div>
+
             <messages-list :messages="messages"
                            :conversation="conversation"
                            :avatars="avatars"/>
@@ -29,6 +31,7 @@ export default {
             avatars: [],
             chatName: '',
             user: frontendData.user,
+            chatImage: '',
         }
     },
     created() {
@@ -39,13 +42,14 @@ export default {
 
     mounted() {
         if (this.conversation.conversationType === 'ONE_TO_ONE') {
-            this.conversation.participants.forEach(p => {
-                if (p.id !== this.user.id) {
-                    this.chatName = p.username
-                }
-            })
+            const otherUser = this.conversation.participants.find(p => p.id !== this.user.id)
+            this.chatName = otherUser.username
+
+            const avatarOwner = this.avatars.find(a => a.id === otherUser.id)
+            this.chatImage = 'data:image/png;base64,' + avatarOwner.img
         } else {
             this.chatName = this.conversation.name
+            // this.chatImage = 'data:image/png;base64,' + this.conversation
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -69,7 +73,7 @@ export default {
 <style>
 
 .user {
-    padding: 15px;
+    padding: 15px 0;
     border-bottom: 1px black solid;
     text-align: center;
     font-size: 32px;
@@ -82,6 +86,15 @@ export default {
 
 .user a:hover {
     color: #4f1ab0;
+}
+
+.chat-image {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 </style>
