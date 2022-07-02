@@ -18,7 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.demo.chat.model.enums.MessageStatus.DELIVERED;
 
@@ -27,21 +30,23 @@ import static com.demo.chat.model.enums.MessageStatus.DELIVERED;
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepo messageRepo;
+    private final ImageServiceImpl imageService;
     private final ConversationRepo conversationRepo;
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final SettingsServiceImpl settingsService;
     private final UserRepo userRepo;
 
     @Autowired
     public MessageServiceImpl(
             MessageRepo messageRepo,
+            ImageServiceImpl imageService,
             ConversationRepo conversationRepo,
             SimpMessagingTemplate simpMessagingTemplate,
-            SettingsServiceImpl settingsService, UserRepo userRepo) {
+            UserRepo userRepo
+    ) {
         this.messageRepo = messageRepo;
+        this.imageService = imageService;
         this.conversationRepo = conversationRepo;
         this.simpMessagingTemplate = simpMessagingTemplate;
-        this.settingsService = settingsService;
         this.userRepo = userRepo;
     }
 
@@ -60,7 +65,11 @@ public class MessageServiceImpl implements MessageService {
         HashMap<String, Object> response = new HashMap<>();
         List<Message> messages = messageRepo.findAllByConversation(conversation);
         response.put("conversation", conversation);
-        response.put("avatars", getAvatars(conversation));
+        try {
+            response.put("avatars", imageService.getAvatars(conversation));
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
         response.put("messages", messages);
         return ResponseEntity.ok().body(response);
     }
@@ -71,6 +80,13 @@ public class MessageServiceImpl implements MessageService {
         message.setSenderId(sender.getId());
         message.setCreatedAt(LocalDateTime.now());
         message.setStatus(DELIVERED);
+
+        Conversation conversation = message.getConversation();
+        conversation.setLastMessage(message.getContent());
+        conversation.setLastMessageSenderId(sender.getId());
+        conversation.setLastMessageCreatedAt(LocalDateTime.now());
+        conversationRepo.save(conversation);
+
         return messageRepo.save(message);
     }
 
@@ -94,22 +110,5 @@ public class MessageServiceImpl implements MessageService {
                 .stream()
                 .map(User::getId)
                 .noneMatch(uuid -> uuid.equals(sender.getId()));
-    }
-
-    private List<HashMap<String, Object>> getAvatars(Conversation conversation) {
-        List<HashMap<String, Object>> avatars = new ArrayList<>();
-        conversation.getParticipants()
-                .forEach(p -> {
-                    try {
-                        String encodeImage = settingsService.encodeImage(p);
-                        HashMap<String, Object> avatar = new HashMap<>();
-                        avatar.put("id", p.getId());
-                        avatar.put("img", encodeImage);
-                        avatars.add(avatar);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-        return avatars;
     }
 }

@@ -1,11 +1,14 @@
 <template>
     <div class="card">
         <div class="card-content">
-            <div class="card-img"></div>
+            <div class="card-img">
+                <img :src="userImage" alt="img">
+            </div>
             <div class="card-text">
                 <span class="card-user" v-html="usernameText"></span>
                 <span class="card-message" v-html="message"></span>
             </div>
+            <i class="fa-solid fa-check fa-xl check" ref="icon"></i>
         </div>
         <a :href="'/chat/'+ chat.conversationId"></a>
     </div>
@@ -14,24 +17,38 @@
 <script>
 
 export default {
-    props: ['chat'],
+    props: ['chat', 'avatars'],
     data() {
         return {
             user: frontendData.user,
+            usernameText: '',
+            message: '',
+            userImage: '',
         }
     },
     created() {
-        this.chat.participants.forEach(u => {
-            if (u.id !== this.user.id) {
-                this.usernameText = u.username
-            }
-        })
-        this.message = "no content"
+        this.usernameText = this.chat.participants.find(p => p.id !== this.user.id).username
+        this.userImage = 'data:image/png;base64,' + this.avatars.find(a => a.id === this.chat.conversationId).img
+        this.message = this.chat.lastMessage
+        console.log(this.chat.lastMessageCreatedAt)
     },
+    mounted() {
+        if (this.chat.lastMessageSenderId === this.user.id) {
+            this.$refs.icon.style.display = 'block'
+        }
+    }
 }
 </script>
 
 <style scoped>
+
+.check {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    color: white;
+    display: none;
+}
 
 .card {
     position: relative;
@@ -56,17 +73,26 @@ export default {
 .card-text {
     position: absolute;
     top: 50%;
-    left: 10%;
+    left: 9%;
     margin: 0;
     transform: translateY(-50%);
     display: inline-block;
     text-decoration: none;
     font-size: 18px;
     color: white;
+    width: 85%;
+    box-sizing: border-box;
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.card-user {
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 .card-img {
@@ -79,12 +105,12 @@ export default {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: white;
 }
 
-.card-user {
-    color: #000000;
-    font-weight: bold;
-    margin-right: 10px;
+.card-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
+
 </style>

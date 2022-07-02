@@ -35,7 +35,7 @@ public class Message {
     private UUID senderId;
 
     @Column(name = "timestamp", updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)

@@ -1,6 +1,5 @@
 package com.demo.chat.service.impl;
 
-import com.demo.chat.model.Conversation;
 import com.demo.chat.model.User;
 import com.demo.chat.model.Views;
 import com.demo.chat.repo.ConversationRepo;
@@ -13,17 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class ConversationServiceImpl implements ConversationService {
 
-    private final ConversationRepo conversationRepo;
+    private final ImageServiceImpl imageService;
 
     @Autowired
-    public ConversationServiceImpl(ConversationRepo conversationRepo) {
-        this.conversationRepo = conversationRepo;
+    public ConversationServiceImpl(ImageServiceImpl imageService) {
+        this.imageService = imageService;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
-    public ResponseEntity<List<Conversation>> getAllConversations(User user) {
-        return ResponseEntity.ok().body(conversationRepo.findAllConversations(user));
+    public ResponseEntity<?> getAllConversations(User user) {
+        return ResponseEntity.ok().body(imageService.getAllConversationsData(user));
     }
 }
