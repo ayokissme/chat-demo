@@ -11,8 +11,8 @@
 
 <script>
 
-import MessageRow from 'components/chat-room/MessageRow.vue'
-import ChatForm from 'components/chat-room/ChatForm.vue'
+import MessageRow from 'components/messages/MessageRow.vue'
+import ChatForm from 'components/messages/ChatForm.vue'
 
 export default {
     props: ['messages', 'conversation', 'avatars'],

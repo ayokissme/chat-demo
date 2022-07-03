@@ -3,20 +3,50 @@
         <input class="search" type="text" placeholder="Find user" @keyup.enter="findUser" v-model="username">
         <input class="search-submit" type="submit" value="Search" @click="findUser" :disabled="username.length === 0">
     </div>
+
+    <div v-show="!$parent.$data.showChatBlock">
+        <h1>Results: </h1>
+        <search-result v-for="user in users"
+                       :user="user"
+                       :avatars="avatars"/>
+    </div>
 </template>
 
 <script>
+
+import SearchResult from "components/chats/SearchResult.vue";
+
 export default {
     name: "ChatSearch",
+    components: {
+        SearchResult,
+    },
     data() {
         return {
             username: '',
+            users: [],
+            avatars: []
         }
     },
     methods: {
         findUser() {
-            console.log("wherar u", this.username)
-        }
+            this.$parent.$data.showChatBlock = false
+            const url = "/api/user/find/" + this.username
+            fetch(url)
+                .then(result => result.json())
+                .then(data => {
+                    this.users = data.users
+                    this.avatars = data.avatars
+                })
+        },
+    },
+    watch: {
+        username() {
+            if (this.username.length === 0) {
+                this.$parent.$data.showChatBlock = true
+                this.users = []
+            }
+        },
     }
 }
 </script>
@@ -55,6 +85,7 @@ export default {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border: none;
+    cursor: pointer;
 }
 
 .search-submit:hover {
@@ -64,6 +95,7 @@ export default {
 .search-submit:disabled {
     color: #653f9f;
     background-color: #914ff5;
+    cursor: default;
 }
 
 </style>

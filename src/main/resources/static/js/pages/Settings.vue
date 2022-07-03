@@ -9,7 +9,8 @@
     <div class="notification-bar">
         <notification v-for="notification in notifications"
                       :key="notification.notificationId"
-                      :notification="notification"/>
+                      :notification="notification"
+                      :notifications="notifications"/>
     </div>
 
 </template>
@@ -29,10 +30,14 @@ export default {
     data() {
         return {
             notifications: [],
+            user: frontendData.user,
         }
     },
     created() {
         addHandler(data => {
+            if (data.senderId === this.user.id) {
+                return
+            }
             this.notifications.push(data)
         })
     },

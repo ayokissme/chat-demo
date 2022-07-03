@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +24,13 @@ public class ConversationApi {
     @GetMapping("/all")
     public ResponseEntity<?> allConversation(@AuthenticationPrincipal User user) {
         return conversationService.getAllConversations(user);
+    }
+
+    @GetMapping("/get/{me}/{otherUser}")
+    public ResponseEntity<?> getConversationAddress(
+            @PathVariable("me") User me,
+            @PathVariable("otherUser") User otherUser
+    ) {
+        return conversationService.getConversationAddress(me, otherUser);
     }
 }

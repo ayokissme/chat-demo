@@ -13,19 +13,29 @@
 
         </div>
     </main>
+
+    <div class="notification-bar">
+        <notification v-for="notification in notifications"
+                      :key="notification.notificationId"
+                      :notification="notification"
+                      :notifications="notifications"/>
+    </div>
 </template>
 
 <script>
 
-import MessagesList from 'components/chat-room/MessageList.vue'
+import MessagesList from 'components/messages/MessageList.vue'
 import {addHandler} from 'utils/ws'
+import Notification from 'components/Notification.vue'
 
 export default {
     components: {
         MessagesList,
+        Notification,
     },
     data() {
         return {
+            notifications: [],
             messages: [],
             conversation: null,
             avatars: [],
@@ -37,6 +47,10 @@ export default {
     created() {
         addHandler(data => {
             this.messages.push(data)
+            if (data.senderId === this.user.id || this.conversation.conversationId === data.conversation.conversationId) {
+                return
+            }
+            this.notifications.push(data)
         })
     },
 

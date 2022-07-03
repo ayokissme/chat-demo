@@ -10,7 +10,7 @@
 <script>
 
 import {addHandler} from 'utils/ws'
-import ChatList from 'components/chat-list/ChatList.vue'
+import ChatList from 'components/chats/ChatList.vue'
 
 export default {
     components: {
