@@ -9,6 +9,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="#">
+                        <i class="fa-solid fa-plus fa-sm"></i>
+                        <span>New chat</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/settings">
                         <i class="fa-solid fa-gear fa-sm"></i>
                         <span>Settings</span>
@@ -31,7 +37,7 @@ export default {
 
 .nav-bar {
     float: left;
-    margin-left: 100px;
+    margin-left: 80px;
     margin-top: 80px;
     width: auto;
     overflow-y: auto;

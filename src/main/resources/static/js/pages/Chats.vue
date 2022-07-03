@@ -24,8 +24,15 @@ export default {
     },
     created() {
         addHandler(data => {
-            console.log(data)
-            // this.messages.push(data)
+            const conversation = data.conversation
+            const chatInList = this.chats.find(c => conversation.conversationId === c.conversationId)
+            if (chatInList === undefined) {
+                this.chats.push(conversation)
+            } else {
+                const index = this.chats.findIndex(c => conversation.conversationId === c.conversationId)
+                this.chats.splice(index, 1)
+                this.chats.unshift(conversation)
+            }
         })
     },
     beforeRouteEnter(to, from, next) {

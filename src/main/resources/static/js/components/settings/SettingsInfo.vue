@@ -25,6 +25,7 @@ export default {
         }
     },
     created() {
+
         fetch('/api/settings/get/image', {
             method: 'get',
         })

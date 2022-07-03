@@ -7,8 +7,9 @@ import NotFound from 'pages/NotFound.vue'
 const routes = [
     {path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound},
     {path: '/chat', component: Chats},
-    {path: '/settings', component: Settings},
     {path: '/chat/:id', component: Room},
+    {path: '/settings', component: Settings},
+    {path: '/new-chat', component: Settings},
 ]
 
 export default createRouter({

@@ -1,7 +1,7 @@
 <template>
     <div class="block">
         <input class="search" type="text" placeholder="Find user" @keyup.enter="findUser" v-model="username">
-        <input class="search-submit" type="submit" value="Search" @click="findUser">
+        <input class="search-submit" type="submit" value="Search" @click="findUser" :disabled="username.length === 0">
     </div>
 </template>
 
@@ -59,6 +59,11 @@ export default {
 
 .search-submit:hover {
     background-color: #6d3bbb;
+}
+
+.search-submit:disabled {
+    color: #653f9f;
+    background-color: #914ff5;
 }
 
 </style>

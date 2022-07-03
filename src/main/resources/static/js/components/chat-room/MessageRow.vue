@@ -5,8 +5,13 @@
                 <img :src="userImage" alt="img">
             </div>
             <div class="answer-text">
-                <div class="answer-username" v-html="sender"></div>
-                <div class="answer-content">{{ message.content }}</div>
+                <div class="answer-username">
+                    <span v-html="sender"></span>
+                    <span class="createdAt">{{ message.createdAt }}</span>
+                </div>
+                <div class="answer-content">
+                    {{ message.content }}
+                </div>
             </div>
         </div>
     </div>
@@ -99,6 +104,13 @@ export default {
 
 .answer-content {
     margin-top: 10px;
+}
+
+.createdAt {
+    font-size: 12px;
+    font-weight: normal;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 </style>

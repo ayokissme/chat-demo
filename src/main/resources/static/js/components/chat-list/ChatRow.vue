@@ -8,7 +8,10 @@
                 <span class="card-user" v-html="usernameText"></span>
                 <span class="card-message" v-html="message"></span>
             </div>
-            <i class="fa-solid fa-check fa-xl check" ref="icon"></i>
+            <div class="right-block">
+                <i class="fa-solid fa-check fa-xl check" ref="icon"></i>
+                <span class="date">{{ chat.lastMessageCreatedAt }}</span>
+            </div>
         </div>
         <a :href="'/chat/'+ chat.conversationId"></a>
     </div>
@@ -27,14 +30,21 @@ export default {
         }
     },
     created() {
-        this.usernameText = this.chat.participants.find(p => p.id !== this.user.id).username
-        this.userImage = 'data:image/png;base64,' + this.avatars.find(a => a.id === this.chat.conversationId).img
-        this.message = this.chat.lastMessage
-        console.log(this.chat.lastMessageCreatedAt)
+        this.setValues()
     },
     mounted() {
         if (this.chat.lastMessageSenderId === this.user.id) {
             this.$refs.icon.style.display = 'block'
+        }
+    },
+    updated() {
+        this.setValues()
+    },
+    methods: {
+        setValues() {
+            this.usernameText = this.chat.participants.find(p => p.id !== this.user.id).username
+            this.userImage = 'data:image/png;base64,' + this.avatars.find(a => a.id === this.chat.conversationId).img
+            this.message = this.chat.lastMessage
         }
     }
 }
@@ -42,12 +52,24 @@ export default {
 
 <style scoped>
 
-.check {
+.right-block {
     position: absolute;
     right: 15px;
     top: 50%;
     color: white;
+}
+
+.check {
+    position: absolute;
+    right: 70px;
     display: none;
+}
+
+.date {
+    position: absolute;
+    top: -15px;
+    right: 0;
+    font-size: 12px;
 }
 
 .card {
@@ -80,7 +102,7 @@ export default {
     text-decoration: none;
     font-size: 18px;
     color: white;
-    width: 85%;
+    width: 75%;
     box-sizing: border-box;
 
     white-space: nowrap;

@@ -5,6 +5,7 @@
     <div v-if="chats.length !== 0">
         <chat-row v-for="chat in chats"
                   :chat="chat"
+                  :key="chat.conversationId"
                   :avatars="avatars"/>
     </div>
 
