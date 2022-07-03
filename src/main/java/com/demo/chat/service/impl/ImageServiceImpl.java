@@ -45,11 +45,7 @@ public class ImageServiceImpl implements ImageService {
         conversation.getParticipants()
                 .forEach(p -> {
                     try {
-                        String encodeImage = getEncodedImage(p);
-                        HashMap<Object, Object> avatar = new HashMap<>();
-                        avatar.put("id", p.getId());
-                        avatar.put("img", encodeImage);
-                        avatars.add(avatar);
+                        avatars.add(getUserAvatar(p));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -102,6 +98,14 @@ public class ImageServiceImpl implements ImageService {
             avatars.add(avatar);
         });
         return avatars;
+    }
+
+    public HashMap<Object, Object> getUserAvatar(User user) throws IOException {
+        String encodeImage = getEncodedImage(user);
+        HashMap<Object, Object> avatar = new HashMap<>();
+        avatar.put("id", user.getId());
+        avatar.put("img", encodeImage);
+        return avatar;
     }
 
     public String getEncodedImage(User user) throws IOException {

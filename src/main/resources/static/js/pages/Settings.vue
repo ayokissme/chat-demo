@@ -5,22 +5,40 @@
             <settings-info/>
         </div>
     </main>
+
+    <div class="notification-bar">
+        <notification v-for="notification in notifications"
+                      :key="notification.notificationId"
+                      :notification="notification"/>
+    </div>
+
 </template>
 
 <script>
 
 import {addHandler} from 'utils/ws'
 import SettingsInfo from 'components/settings/SettingsInfo.vue'
+import Notification from 'components/Notification.vue'
 
 export default {
     name: "Settings",
     components: {
-        SettingsInfo
+        SettingsInfo,
+        Notification
+    },
+    data() {
+        return {
+            notifications: [],
+        }
+    },
+    created() {
+        addHandler(data => {
+            this.notifications.push(data)
+        })
     },
 }
 
 </script>
 
 <style scoped>
-
 </style>
