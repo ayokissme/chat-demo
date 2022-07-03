@@ -62,8 +62,9 @@ export default {
             const avatarOwner = this.avatars.find(a => a.id === otherUser.id)
             this.chatImage = 'data:image/png;base64,' + avatarOwner.img
         } else {
+            const conv = this.avatars.find(a => a.id === this.conversation.conversationId)
+            this.chatImage = 'data:image/png;base64,' + conv.img
             this.chatName = this.conversation.name
-            // this.chatImage = 'data:image/png;base64,' + this.conversation
         }
     },
     beforeRouteEnter(to, from, next) {

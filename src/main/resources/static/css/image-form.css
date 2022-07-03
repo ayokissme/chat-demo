@@ -1,0 +1,37 @@
+
+.load-form {
+    width: 95%;
+    margin: auto;
+}
+
+.browse-input {
+    display: none;
+}
+
+.pointers {
+    display: inline-block;
+    width: 130px;
+    cursor: pointer;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.pointers:hover {
+    background-color: #cccccc;
+}
+
+.image-msg {
+    text-align: center;
+    font-size: 24px;
+    padding-bottom: 20px;
+    font-weight: bold;
+    display: none;
+}
+
+.image-error {
+    color: #f13838;
+}
+
+.image-success {
+    color: #7aff7a;
+}
