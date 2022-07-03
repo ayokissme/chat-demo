@@ -2,6 +2,7 @@ package com.demo.chat.service.impl;
 
 import com.demo.chat.model.Conversation;
 import com.demo.chat.model.User;
+import com.demo.chat.model.request.ConversationRequest;
 import com.demo.chat.repo.ConversationRepo;
 import com.demo.chat.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -101,11 +104,22 @@ public class ImageServiceImpl implements ImageService {
     }
 
     public HashMap<Object, Object> getUserAvatar(User user) throws IOException {
-        String encodeImage = getEncodedImage(user);
+        return putAvatarToHashMap(user.getId(), getEncodedImage(user));
+    }
+
+    public HashMap<Object, Object> getConversationAvatar(Conversation conversation) throws IOException {
+        return putAvatarToHashMap(conversation.getConversationId(), getEncodedImage(conversation));
+    }
+
+    public HashMap<Object, Object> putAvatarToHashMap(Object id, String encodedImage) {
         HashMap<Object, Object> avatar = new HashMap<>();
-        avatar.put("id", user.getId());
-        avatar.put("img", encodeImage);
+        avatar.put("id", id);
+        avatar.put("img", encodedImage);
         return avatar;
+    }
+
+    public String getEncodedImage() throws IOException {
+        return this.encodeImage(absolutePath + convPicsFolder + "no-conv-picture.png");
     }
 
     public String getEncodedImage(User user) throws IOException {
@@ -121,10 +135,9 @@ public class ImageServiceImpl implements ImageService {
         return Base64.getEncoder().encodeToString(fileContent);
     }
 
-    public HashMap<Object, Object> getConversationAvatar(Conversation conversation) throws IOException {
-        HashMap<Object, Object> convAvatar = new HashMap<>();
-        String encodeImage = getEncodedImage(conversation);
-        convAvatar.put(conversation.getConversationId(), encodeImage);
-        return convAvatar;
+    public void encodeImageToBytesAndSave(String imgName, String img) throws IOException {
+        byte[] decodedBytes = Base64.getDecoder().decode(img);
+        String path = absolutePath + convPicsFolder + imgName;
+        Files.write(Path.of(path), decodedBytes);
     }
 }

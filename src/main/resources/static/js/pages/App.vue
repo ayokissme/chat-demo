@@ -9,7 +9,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/new-chat">
                         <i class="fa-solid fa-plus fa-sm"></i>
                         <span>New chat</span>
                     </a>

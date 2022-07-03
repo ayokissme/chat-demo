@@ -1,10 +1,10 @@
 <template>
-    <div class="info-card">
-        <div class="user-image">
+    <div className="info-card">
+        <div className="user-image">
             <img src="" alt="your image" id="currImage">
         </div>
-        <div class="username">
-            {{user.username}}
+        <div className="username">
+            {{ user.username }}
         </div>
         <settings-image :userImage="userImage"/>
     </div>
@@ -25,7 +25,6 @@ export default {
         }
     },
     created() {
-
         fetch('/api/settings/get/image', {
             method: 'get',
         })

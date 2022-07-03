@@ -30,7 +30,13 @@ export default {
         }
     },
     created() {
-        this.setValues()
+        if (this.chat.conversationType === 'MULTIPLE') {
+            this.usernameText = this.chat.name
+            this.setValues()
+        } else {
+            this.usernameText = this.chat.participants.find(p => p.id !== this.user.id).username
+            this.setValues()
+        }
     },
     mounted() {
         if (this.chat.lastMessageSenderId === this.user.id) {
@@ -42,7 +48,6 @@ export default {
     },
     methods: {
         setValues() {
-            this.usernameText = this.chat.participants.find(p => p.id !== this.user.id).username
             this.userImage = 'data:image/png;base64,' + this.avatars.find(a => a.id === this.chat.conversationId).img
             this.message = this.chat.lastMessage
         }

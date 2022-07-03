@@ -46,4 +46,5 @@ export default {
 </script>
 
 <style scoped>
+@import '../../css/image-form.css';
 </style>

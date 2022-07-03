@@ -15,8 +15,7 @@
             </div>
         </div>
 
-        <input class="browse-input" type="file" ref="imageFile" id="imageFile" name="imageFile" accept="image/*"
-               @change="addImage">
+        <input class="browse-input" type="file" ref="imageFile" id="imageFile" accept="image/*" @change="addImage">
         <input type="submit" id="save" :disabled="isDisabled" style="display: none">
         <input type="button" id="remove" @click="removeImageFile" :disabled="isDisabled" style="display: none">
     </form>
@@ -44,13 +43,13 @@ export default {
         saveImage() {
             const formData = new FormData()
             formData.append('imageFile', this.imageFile)
-
             fetch('/api/settings/upload/image', {
                 method: 'POST',
                 body: formData
             })
                 .then(() => {
                     document.getElementById('imageSuc').style.display = 'block'
+                    document.getElementById('hiddenBlocks').style.display = 'none'
                 })
                 .catch(() => {
                     document.getElementById('imageErr').style.display = 'block'
@@ -64,46 +63,7 @@ export default {
         }
     }
 }
-
 </script>
 
 <style scoped>
-
-.load-form {
-    width: 95%;
-    margin: auto;
-}
-
-.browse-input {
-    display: none;
-}
-
-.pointers {
-    display: inline-block;
-    width: 130px;
-    cursor: pointer;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.pointers:hover {
-    background-color: #cccccc;
-}
-
-.image-msg {
-    text-align: center;
-    font-size: 24px;
-    padding-bottom: 20px;
-    font-weight: bold;
-    display: none;
-}
-
-.image-error {
-    color: #f13838;
-}
-
-.image-success {
-    color: #7aff7a;
-}
-
 </style>
