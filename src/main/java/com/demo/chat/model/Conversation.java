@@ -50,4 +50,10 @@ public class Conversation {
     public void addParticipant(User user) {
         this.participants.add(user);
     }
+
+    public boolean isUserInChatGroup(User user) {
+        return this.participants.stream()
+                .map(User::getId)
+                .anyMatch(uuid -> uuid == user.getId());
+    }
 }

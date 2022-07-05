@@ -1,5 +1,6 @@
 package com.demo.chat.api;
 
+import com.demo.chat.model.Conversation;
 import com.demo.chat.model.User;
 import com.demo.chat.model.request.ConversationRequest;
 import com.demo.chat.service.impl.ConversationServiceImpl;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/conversation")
@@ -55,5 +57,14 @@ public class ConversationApi {
             @AuthenticationPrincipal User user
     ) throws IOException {
         return conversationService.createNewConversation(conversationRequest, user);
+    }
+
+    @GetMapping("/{convId}/{secKey}")
+    public ResponseEntity<?> addUserToChat(
+            @AuthenticationPrincipal User user,
+            @PathVariable("convId") Conversation conversation,
+            @PathVariable("secKey") UUID securityKey
+    ) {
+        return conversationService.addUserToChatGroup(user, conversation, securityKey);
     }
 }

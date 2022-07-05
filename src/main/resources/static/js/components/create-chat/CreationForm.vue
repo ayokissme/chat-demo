@@ -36,7 +36,6 @@ export default {
         return {
             defaultImg: '',
             img: '',
-            imgDecoded: '',
             enabled: false,
             name: ''
         }
@@ -47,32 +46,36 @@ export default {
             .then(data => {
                 this.defaultImg = 'data:image/png;base64,' + data.img
                 this.img = 'data:image/png;base64,' + data.img
-                this.imgDecoded = data.img
             })
     },
     methods: {
         createChat() {
-            const formData = new FormData()
-            formData.append('imageFile', this.img)
-            formData.append("name", this.name)
-            let data = JSON.stringify({imageFile: this.imgDecoded, name: this.name})
+            const reader = new FileReader()
+            reader.readAsDataURL(this.imageFile)
+            reader.onload = () => {
+                const imgBase64 = reader.result.replace('data:image/png;base64,', '')
+                    .replace('data:image/jpeg;base64,', '')
+                let data = JSON.stringify({imageFile: imgBase64, name: this.name})
+                console.log(imgBase64)
 
-            fetch('/api/conversation/create/new', {
-                method: 'POST',
-                body: data,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then(() => {
+                fetch('/api/conversation/create/new', {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
                 })
-                .catch(() => {
-                    document.getElementById('imageErr').style.display = 'block'
-                })
-
+                    .then(r => r.json())
+                    .then(data => {
+                        this.$router.push('/chat/' + data.conversationId)
+                    })
+                    .catch(() => {
+                        document.getElementById('imageErr').style.display = 'block'
+                    })
+            };
         },
-        addImage() {
+        async addImage() {
             this.imageFile = this.$refs.imageFile.files[0]
             this.enabled = true
             this.img = URL.createObjectURL(this.imageFile)

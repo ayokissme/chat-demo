@@ -18,8 +18,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static com.demo.chat.model.enums.ConversationType.MULTIPLE;
-import static com.demo.chat.model.enums.ConversationType.ONE_TO_ONE;
+import static com.demo.chat.model.enums.ConversationType.*;
 
 @Service
 @Transactional
@@ -79,14 +78,27 @@ public class ConversationServiceImpl implements ConversationService {
         try {
             conversation = conversationRepo.save(conversation);
             String imgName = conversation.getConversationId() + ".jpg";
-            conversationRepo.save(conversation);
+            conversation.setImage(imgName);
             imageService.encodeImageToBytesAndSave(
                     imgName,
                     conversationRequest.getImageFile()
             );
-            return null;
+            return ResponseEntity.ok().body(conversationRepo.save(conversation));
         } catch (IOException e) {
             throw new IOException();
         }
+    }
+
+    @Override
+    public ResponseEntity<?> addUserToChatGroup(User user, Conversation conversation, UUID securityKey) {
+        if (!conversation.getSecretKey().equals(securityKey)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (conversation.isUserInChatGroup(user)) {
+            return ResponseEntity.ok().build();
+        }
+        conversation.addParticipant(user);
+        conversationRepo.save(conversation);
+        return ResponseEntity.ok().build();
     }
 }

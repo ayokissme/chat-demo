@@ -29,6 +29,7 @@ export default {
     },
     created() {
         const sender = this.conversation.participants.find(p => p.id === this.message.senderId)
+        console.log(sender)
         this.sender = sender.username
 
         const avatarOwner = this.avatars.find(p => p.id === this.message.senderId)

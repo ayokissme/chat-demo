@@ -36,6 +36,7 @@ export default {
     created() {
         this.link = '/chat/' + this.notification.conversation.conversationId
         if (this.notification.conversation.conversationType === 'MULTIPLE') {
+            console.log(this.notification.conversation)
             this.multiple()
         } else {
             this.one_to_one()

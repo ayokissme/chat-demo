@@ -9,6 +9,7 @@ const routes = [
     {path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound},
     {path: '/chat', component: Chats},
     {path: '/chat/:id', component: Room},
+    {path: '/chat/:id/:secretKey', component: Room},
     {path: '/settings', component: Settings},
     {path: '/new-chat', component: CreateChat},
 ]

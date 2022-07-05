@@ -14,12 +14,13 @@ import ChatList from 'components/chats/ChatList.vue'
 
 export default {
     components: {
-        ChatList
+        ChatList,
     },
     data() {
         return {
             chats: [],
             avatars: [],
+            notifications: [],
         }
     },
     created() {
